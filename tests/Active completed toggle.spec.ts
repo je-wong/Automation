@@ -1,13 +1,12 @@
 import { test, expect } from '@playwright/test';
+import { addTodoItem } from '../utils/utility';
 
 test('Add, Mark, and Toggle Todo Item', async ({ page }) => {
   // Visit the todo application page
   await page.goto('https://example.cypress.io/todo#/');
 
-  // Add a new todo item
-  const newItemText = 'Buy toothpaste';
-  await page.fill('.new-todo', newItemText);
-  await page.press('.new-todo', 'Enter');
+  // Add a new todo item using the utility function
+  const newItemText = await addTodoItem(page);
 
   // Locate the todo item by text (assuming it's unique)
   const todoItemSelector = `.todo-list li:has-text("${newItemText}")`;

@@ -1,13 +1,12 @@
 import { test, expect } from '@playwright/test';
+import { addTodoItem } from '../utils/utility';
 
 test('Add and Edit Todo Entry', async ({ page }) => {
   // Visit the todo application page
   await page.goto('https://example.cypress.io/todo#/');
 
-  // Add a new todo item
-  const newItemText = 'Pay for power';
-  await page.fill('.new-todo', newItemText);
-  await page.press('.new-todo', 'Enter');
+  // Add a new todo item using the utility function
+  const newItemText = await addTodoItem(page);
 
   // Verify that the todo entry has been added
   const addedTodoSelector = `.todo-list label:has-text("${newItemText}")`;
@@ -17,7 +16,7 @@ test('Add and Edit Todo Entry', async ({ page }) => {
   await page.dblclick(addedTodoSelector);
 
   // Edit the todo entry to 'pay power'
-  const editedTodoText = 'pay power';
+  const editedTodoText = 'this has been edited';
   const editInputSelector = '.edit';
   await page.fill(editInputSelector, editedTodoText);
   
